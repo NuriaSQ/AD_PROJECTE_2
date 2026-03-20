@@ -13,7 +13,7 @@ import com.ra34.projecte2.dto.ProductResponseDTO;
 import com.ra34.projecte2.service.ProductServices;
 
 @RestController
-@RequestMapping("/api/Product")
+@RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
@@ -88,5 +88,18 @@ public class ProductController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("ERROR: " + e.getMessage());
         }
+    }
+
+    // Endpoint per buscar per el nom d'un producte
+    @GetMapping("/search/nom")
+    public ResponseEntity<List<ProductResponseDTO>> searchByName(@RequestParam String prefix) {
+        return ResponseEntity.ok(productServices.searchByName(prefix));
+    }
+
+    // Endpoint per ordenar per preu
+    @GetMapping("/search/order")
+    public ResponseEntity<List<ProductResponseDTO>> searchByPrice(@RequestParam String order) {
+        List<ProductResponseDTO> results = productServices.searchByPrice(order);
+        return ResponseEntity.ok(results);
     }
 }

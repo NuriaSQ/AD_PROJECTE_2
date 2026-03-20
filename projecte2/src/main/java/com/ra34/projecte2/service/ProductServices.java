@@ -9,8 +9,10 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -243,4 +245,27 @@ public class ProductServices {
 
         return numRegInsert;
     }
+
+    // Funció per buscar per nom
+    public List<ProductResponseDTO> searchByName(String prefix) {
+        List<Product> products = productRepository.findByNameContainingIgnoreCaseAndStatusTrue(prefix);
+        return products.stream()
+                .map(this::toResponseDTO)
+                .collect(Collectors.toList());
+    }
+
+    // Funció per ordenar per preu
+    public List<ProductResponseDTO> searchByPrice(String order) {
+    if ("desc".equalsIgnoreCase(order)) {
+        return productRepository.findByStatusTrueOrderByPriceDesc()
+                                .stream()
+                                .map(this::toResponseDTO)
+                                .toList();
+    } else {
+        return productRepository.findByStatusTrueOrderByPriceAsc()
+                                .stream()
+                                .map(this::toResponseDTO)
+                                .toList();
+    }
+}
 }
