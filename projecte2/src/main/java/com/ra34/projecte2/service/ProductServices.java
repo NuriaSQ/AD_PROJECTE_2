@@ -10,9 +10,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -266,6 +266,24 @@ public class ProductServices {
                                 .stream()
                                 .map(this::toResponseDTO)
                                 .toList();
+        }
     }
-}
+
+    //Retorna llista amb productes que estiguin entre preu min i preu max
+    @Transactional
+    public List<Product> getProductsByPriceRange(Double min, Double max, String order) {
+        Stream<Product> stream = order.equalsIgnoreCase("asc") ?
+                productRepository.findByPriceRangeAsc(min, max) :
+                productRepository.findByPriceRangeDesc(min, max);
+
+        return stream.collect(Collectors.toList());
+    }
+
+    //Retorna una llista amb el top 5 de productes amb el millor preu
+    @Transactional
+    public List<Product> getTop5ByQualityPrice() {
+        return productRepository.topByQualityPrice()
+                .limit(5)
+                .collect(Collectors.toList());
+    }
 }

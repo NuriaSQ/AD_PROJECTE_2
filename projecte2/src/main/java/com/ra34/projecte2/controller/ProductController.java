@@ -1,6 +1,7 @@
 package com.ra34.projecte2.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ra34.projecte2.dto.ProductRequestDTO;
 import com.ra34.projecte2.dto.ProductResponseDTO;
+import com.ra34.projecte2.model.Product;
 import com.ra34.projecte2.service.ProductServices;
 
 @RestController
@@ -102,4 +104,32 @@ public class ProductController {
         List<ProductResponseDTO> results = productServices.searchByPrice(order);
         return ResponseEntity.ok(results);
     }
+
+    @GetMapping("/search/price-range")
+    public ResponseEntity<List<ProductResponseDTO>> getProductsByPriceRange(
+            @RequestParam Double priceMin,
+            @RequestParam Double priceMax,
+            @RequestParam String order) {
+
+        List<Product> products = productServices.getProductsByPriceRange(priceMin, priceMax, order);
+
+        List<ProductResponseDTO> dtoList = products.stream()
+                .map(ProductResponseDTO::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtoList);
+    }
+
+    @GetMapping("/search/top-quality-price")
+    public ResponseEntity<List<ProductResponseDTO>> getTop5QualityPrice() {
+
+        List<Product> products = productServices.getTop5ByQualityPrice();
+
+        List<ProductResponseDTO> dtoList = products.stream()
+                .map(ProductResponseDTO::new)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(dtoList);
+    }
+
 }

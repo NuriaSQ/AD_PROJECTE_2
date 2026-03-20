@@ -3,6 +3,7 @@ package com.ra34.projecte2.dto;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.ra34.projecte2.model.Condition;
+import com.ra34.projecte2.model.Product;
 
 public class ProductResponseDTO {
 
@@ -18,6 +19,15 @@ public class ProductResponseDTO {
     private LocalDateTime dataUpdated;
 
     public ProductResponseDTO() {
+    }
+
+    public ProductResponseDTO(Product product) {
+        this.id = product.getId();
+        this.name = product.getName();
+        this.price = product.getPrice();
+        this.stock = product.getStock();
+        this.rating = product.getRating();
+        this.status = product.getStatus();
     }
 
     public Long getId() {
