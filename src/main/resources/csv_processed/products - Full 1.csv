@@ -1,0 +1,21 @@
+"name;description;stock;price;rating;condition
+Product 1;Descripció del producte 1;10;19.99;4.5;NOU
+Product 2;Descripció del producte 2;5;9.50;3.8;BON_ESTAT
+Product 3;Descripció del producte 3;15;29.99;;ACCEPTABLE
+Product 4;Descripció del producte 4;8;14.75;4.2;MAL_ESTAT
+Product 5;Descripció del producte 5;20;49.99;5;NOU
+Product 6;Descripció del producte 6;7;24.50;;BON_ESTAT
+Product 7;Descripció del producte 7;12;19.00;3.5;ACCEPTABLE
+Product 8;Descripció del producte 8;3;7.99;2.9;MAL_ESTAT
+Product 9;Descripció del producte 9;18;39.99;4.8;NOU
+Product 10;Descripció del producte 10;6;12.50;3.9;BON_ESTAT
+Product 11;Descripció del producte 11;11;22.99;4.1;ACCEPTABLE
+Product 12;Descripció del producte 12;9;17.50;;MAL_ESTAT
+Product 13;Descripció del producte 13;14;27.99;4.7;NOU
+Product 14;Descripció del producte 14;5;8.99;3.2;BON_ESTAT
+Product 15;Descripció del producte 15;16;31.99;4.6;ACCEPTABLE
+Product 16;Descripció del producte 16;4;6.50;2.8;MAL_ESTAT
+Product 17;Descripció del producte 17;19;44.99;5;NOU
+Product 18;Descripció del producte 18;7;18.75;3.9;BON_ESTAT
+Product 19;Descripció del producte 19;13;26.50;4.3;ACCEPTABLE
+Product 20;Descripció del producte 20;2;5.99;;MAL_ESTAT"
