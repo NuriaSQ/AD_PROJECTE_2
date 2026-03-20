@@ -22,6 +22,7 @@ public class Product {
     private BigDecimal rating;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "`condition`")
     private Condition condition;
 
     private Boolean status;
