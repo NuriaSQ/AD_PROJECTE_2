@@ -90,6 +90,20 @@ public class ProductController {
         }
     }
 
+    //Endpoint per buscar per el nom d'un producte
+    @GetMapping("/search/nom")
+    public ResponseEntity<List<ProductResponseDTO>> searchByName(@RequestParam String prefix) {
+        List<ProductResponseDTO> results = productServices.searchByName(prefix);
+        return ResponseEntity.ok(results);
+    }
+
+    //Endpoint per ordenar per preu
+    @GetMapping("/search/order")
+    public ResponseEntity<List<ProductResponseDTO>> searchByPrice(@RequestParam String order) {
+        List<ProductResponseDTO> results = productServices.searchByPrice(order);
+        return ResponseEntity.ok(results);
+    }
+
     //Endpoint per mostrar productes dins d'un rang de preu min i preu max
     @GetMapping("/search/price-range")
     public ResponseEntity<List<ProductResponseDTO>> getProductsByPriceRange(
