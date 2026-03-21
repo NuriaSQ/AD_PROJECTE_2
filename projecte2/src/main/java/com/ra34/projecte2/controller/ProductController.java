@@ -1,7 +1,6 @@
 package com.ra34.projecte2.controller;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ra34.projecte2.dto.ProductRequestDTO;
 import com.ra34.projecte2.dto.ProductResponseDTO;
-import com.ra34.projecte2.model.Product;
 import com.ra34.projecte2.service.ProductServices;
 
 @RestController
@@ -92,43 +90,18 @@ public class ProductController {
         }
     }
 
-    // Endpoint per buscar per el nom d'un producte
-    @GetMapping("/search/nom")
-    public ResponseEntity<List<ProductResponseDTO>> searchByName(@RequestParam String prefix) {
-        return ResponseEntity.ok(productServices.searchByName(prefix));
-    }
-
-    // Endpoint per ordenar per preu
-    @GetMapping("/search/order")
-    public ResponseEntity<List<ProductResponseDTO>> searchByPrice(@RequestParam String order) {
-        List<ProductResponseDTO> results = productServices.searchByPrice(order);
-        return ResponseEntity.ok(results);
-    }
-
+    //Endpoint per mostrar productes dins d'un rang de preu min i preu max
     @GetMapping("/search/price-range")
     public ResponseEntity<List<ProductResponseDTO>> getProductsByPriceRange(
-            @RequestParam Double priceMin,
-            @RequestParam Double priceMax,
-            @RequestParam String order) {
-
-        List<Product> products = productServices.getProductsByPriceRange(priceMin, priceMax, order);
-
-        List<ProductResponseDTO> dtoList = products.stream()
-                .map(ProductResponseDTO::new)
-                .collect(Collectors.toList());
-
+            @RequestParam Double priceMin,@RequestParam Double priceMax,@RequestParam String order) {
+        List<ProductResponseDTO> dtoList = productServices.getProductsByPriceRange(priceMin, priceMax, order);
         return ResponseEntity.ok(dtoList);
     }
 
+    //Endpoint que mostra el top 5 de millors preus
     @GetMapping("/search/top-quality-price")
     public ResponseEntity<List<ProductResponseDTO>> getTop5QualityPrice() {
-
-        List<Product> products = productServices.getTop5ByQualityPrice();
-
-        List<ProductResponseDTO> dtoList = products.stream()
-                .map(ProductResponseDTO::new)
-                .collect(Collectors.toList());
-
+        List<ProductResponseDTO> dtoList = productServices.getTop5ByQualityPrice();
         return ResponseEntity.ok(dtoList);
     }
 

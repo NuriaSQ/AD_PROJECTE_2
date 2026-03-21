@@ -1,9 +1,18 @@
 package com.ra34.projecte2.model;
 
-import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+//Entidad producte amb les seves variables, getters i setters per construir la base de dades.
 @Entity
 @Table(name = "products")
 public class Product {

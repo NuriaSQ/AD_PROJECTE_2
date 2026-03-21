@@ -3,6 +3,7 @@ package com.ra34.projecte2.dto;
 import java.math.BigDecimal;
 import com.ra34.projecte2.model.Condition;
 
+//DTO per rebre dades de creació i modificació d’un producte.
 public class ProductRequestDTO {
 
     private String name;

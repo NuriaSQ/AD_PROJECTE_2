@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import com.ra34.projecte2.model.Condition;
 import com.ra34.projecte2.model.Product;
 
+//DTO per retornar la informació d’un producte al client.
 public class ProductResponseDTO {
 
     private Long id;
@@ -24,10 +25,14 @@ public class ProductResponseDTO {
     public ProductResponseDTO(Product product) {
         this.id = product.getId();
         this.name = product.getName();
-        this.price = product.getPrice();
+        this.description = product.getDescription();
         this.stock = product.getStock();
+        this.price = product.getPrice();
         this.rating = product.getRating();
+        this.condition = product.getCondition();
         this.status = product.getStatus();
+        this.dataCreated = product.getDataCreated();
+        this.dataUpdated = product.getDataUpdated();
     }
 
     public Long getId() {

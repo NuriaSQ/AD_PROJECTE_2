@@ -21,10 +21,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //JPQL
 
-    //Llista de productes que estan entre preu min i preu max
+    //Llista de productes que estan entre preu min i preu max ascendent
      @Query("SELECT p FROM Product p WHERE p.price BETWEEN :min AND :max AND p.status = true ORDER BY p.price ASC")
     Stream<Product> findByPriceRangeAsc(@Param("min") Double min, @Param("max") Double max);
 
+    //Llista de productes que estan entre preu min i preu max descendent
     @Query("SELECT p FROM Product p WHERE p.price BETWEEN :min AND :max AND p.status = true ORDER BY p.price DESC")
     Stream<Product> findByPriceRangeDesc(@Param("min") Double min, @Param("max") Double max);
     

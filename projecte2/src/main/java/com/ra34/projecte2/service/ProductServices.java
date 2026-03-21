@@ -42,9 +42,9 @@ public class ProductServices {
             product.setRating(dto.getRating());
             product.setCondition(dto.getCondition());
             product.setStatus(true);
-
+            product.setDataCreated(java.time.LocalDateTime.now());
+            product.setDataUpdated(java.time.LocalDateTime.now());
             productRepository.save(product);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -52,15 +52,9 @@ public class ProductServices {
 
     //Mostra la llista de tots el productes de la bbdd
     public List<ProductResponseDTO> findAll() {
-
         try {
-            List<ProductResponseDTO> list = productRepository.findAll()
-                    .stream()
-                    .map(this::toResponseDTO)
-                    .toList();
-
+            List<ProductResponseDTO> list = productRepository.findAll().stream().map(this::toResponseDTO).toList();
             return list;
-
         } catch (Exception e) {
             return null;
         }
@@ -84,24 +78,19 @@ public class ProductServices {
 
     //Actualitza la informació d'un producte
     public void updateProduct(Long id, ProductRequestDTO dto) {
-
         try {
             Optional<Product> opt = productRepository.findById(id);
-
             if (opt.isEmpty())
                 return;
-
             Product product = opt.get();
-
             product.setName(dto.getName());
             product.setDescription(dto.getDescription());
             product.setStock(dto.getStock());
             product.setPrice(dto.getPrice());
             product.setRating(dto.getRating());
             product.setCondition(dto.getCondition());
-
+            product.setDataUpdated(java.time.LocalDateTime.now());
             productRepository.save(product);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -109,18 +98,14 @@ public class ProductServices {
 
     //Modifica i actualitza l'estoc dels productes
     public void updateStock(Long id, Integer stock) {
-
         try {
             Optional<Product> opt = productRepository.findById(id);
-
             if (opt.isEmpty())
                 return;
-
             Product product = opt.get();
             product.setStock(stock);
-
+            product.setDataUpdated(java.time.LocalDateTime.now());
             productRepository.save(product);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -128,18 +113,14 @@ public class ProductServices {
 
     //Actualitza el preu d'un producte
     public void updatePrice(Long id, Double price) {
-
         try {
             Optional<Product> opt = productRepository.findById(id);
-
             if (opt.isEmpty())
                 return;
-
             Product product = opt.get();
             product.setPrice(java.math.BigDecimal.valueOf(price));
-
+            product.setDataUpdated(java.time.LocalDateTime.now());
             productRepository.save(product);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,7 +128,6 @@ public class ProductServices {
 
     //Elimina un producte
     public void deleteProduct(Long id) {
-
         try {
             productRepository.deleteById(id);
         } catch (Exception e) {
@@ -157,21 +137,91 @@ public class ProductServices {
 
     //Eliminació llògica d'un producte
     public void logicalDelete(Long id) {
-
         try {
             Optional<Product> opt = productRepository.findById(id);
-
             if (opt.isEmpty())
                 return;
-
             Product product = opt.get();
             product.setStatus(false);
-
+            product.setDataUpdated(java.time.LocalDateTime.now());
             productRepository.save(product);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    //Carrega dades mitjançant un arxiu .cvs
+    @Transactional
+    public int insertAllProductsByCsv(MultipartFile file) throws Exception {
+        System.out.println("ProductServices: insertAllProductsByCsv - Carregant la informació del fitxer " + file.getOriginalFilename());
+
+        int numRegInsert = 0;
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
+            String linia = br.readLine();
+            int numeroLinia = 0;
+            while (linia != null) {
+                numeroLinia++;
+                if (numeroLinia != 1) {
+                    String[] camps = linia.split(";");
+                    if (camps.length < 6) {
+                        throw new Exception("Error al fitxer CSV, línia " + numeroLinia + " incompleta");
+                    }
+                    Product product = new Product();
+                    product.setName(camps[0].trim().replace("\"", ""));
+                    product.setDescription(camps[1].trim().replace("\"", ""));
+                    product.setStock(Integer.parseInt(camps[2].trim().replace("\"", "")));
+                    product.setPrice(new BigDecimal(camps[3].trim().replace("\"", "")));
+                    product.setRating(camps[4].trim().isEmpty() ? null : new BigDecimal(camps[4].trim().replace("\"", "")));
+                    product.setCondition(Condition.valueOf(camps[5].trim().replace("\"", "").toUpperCase()));
+                    product.setStatus(true);
+                    product.setDataCreated(java.time.LocalDateTime.now());
+                    product.setDataUpdated(java.time.LocalDateTime.now());
+                    productRepository.save(product);
+                    numRegInsert++;
+                }
+                linia = br.readLine();
+            }
+            Path folder = Paths.get("src/main/resources/csv_processed");
+            Files.createDirectories(folder);
+            Path desti = folder.resolve(file.getOriginalFilename());
+            Files.copy(file.getInputStream(), desti, StandardCopyOption.REPLACE_EXISTING);
+
+            System.out.println("ProductServices: insertAllProductsByCsv - S'han guardat correctament " + numRegInsert + " registres");
+
+        } catch (Exception e) {
+            System.err.println("ProductServices: insertAllProductsByCsv - Error important CSV: " + e.getMessage());
+            throw e;
+        }
+        return numRegInsert;
+    }
+
+    // Funció per buscar per nom
+    public List<ProductResponseDTO> searchByName(String prefix) {
+        List<Product> products = productRepository.findByNameContainingIgnoreCaseAndStatusTrue(prefix);
+        return products.stream().map(this::toResponseDTO).collect(Collectors.toList());
+    }
+
+    // Funció per ordenar per preu
+    public List<ProductResponseDTO> searchByPrice(String order) {
+    if ("desc".equalsIgnoreCase(order)) {
+        return productRepository.findByStatusTrueOrderByPriceDesc().stream().map(this::toResponseDTO).toList();
+    } else {
+        return productRepository.findByStatusTrueOrderByPriceAsc().stream().map(this::toResponseDTO).toList();
+        }
+    }
+
+    //Retorna llista amb productes que estiguin entre preu min i preu max
+    @Transactional
+    public List<ProductResponseDTO> getProductsByPriceRange(Double min, Double max, String order) {
+        Stream<Product> stream = order.equalsIgnoreCase("asc") ?
+                productRepository.findByPriceRangeAsc(min, max) : productRepository.findByPriceRangeDesc(min, max);
+        return stream.map(this::toResponseDTO).toList();
+    }
+
+    //Retorna una llista amb el top 5 de productes amb el millor preu
+    @Transactional
+    public List<ProductResponseDTO> getTop5ByQualityPrice() {
+        return productRepository.topByQualityPrice().limit(5).map(this::toResponseDTO).toList();
     }
 
     private ProductResponseDTO toResponseDTO(Product product) {
@@ -192,98 +242,4 @@ public class ProductServices {
         return dto;
     }
 
-    //Carrega dades mitjançant un arxiu .cvs
-    @Transactional
-    public int insertAllProductsByCsv(MultipartFile file) throws Exception {
-        System.out.println("ProductServices: insertAllProductsByCsv - Carregant la informació del fitxer " + file.getOriginalFilename());
-
-        int numRegInsert = 0;
-
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
-
-            String linia = br.readLine();
-            int numeroLinia = 0;
-
-            while (linia != null) {
-                numeroLinia++;
-
-                if (numeroLinia != 1) {
-                    String[] camps = linia.split(";");
-
-                    if (camps.length < 6) {
-                        throw new Exception("Error al fitxer CSV, línia " + numeroLinia + " incompleta");
-                    }
-
-                    Product product = new Product();
-                    product.setName(camps[0].trim().replace("\"", ""));
-                    product.setDescription(camps[1].trim().replace("\"", ""));
-                    product.setStock(Integer.parseInt(camps[2].trim().replace("\"", "")));
-                    product.setPrice(new BigDecimal(camps[3].trim().replace("\"", "")));
-                    product.setRating(camps[4].trim().isEmpty() ? null : new BigDecimal(camps[4].trim().replace("\"", "")));
-                    product.setCondition(Condition.valueOf(camps[5].trim().replace("\"", "").toUpperCase()));
-                    product.setStatus(true);
-
-                    productRepository.save(product);
-                    numRegInsert++;
-                }
-
-                linia = br.readLine();
-            }
-
-            Path folder = Paths.get("src/main/resources/csv_processed");
-            Files.createDirectories(folder);
-
-            Path desti = folder.resolve(file.getOriginalFilename());
-            Files.copy(file.getInputStream(), desti, StandardCopyOption.REPLACE_EXISTING);
-
-            System.out.println("ProductServices: insertAllProductsByCsv - S'han guardat correctament " + numRegInsert + " registres");
-
-        } catch (Exception e) {
-            System.err.println("ProductServices: insertAllProductsByCsv - Error important CSV: " + e.getMessage());
-            throw e;
-        }
-
-        return numRegInsert;
-    }
-
-    // Funció per buscar per nom
-    public List<ProductResponseDTO> searchByName(String prefix) {
-        List<Product> products = productRepository.findByNameContainingIgnoreCaseAndStatusTrue(prefix);
-        return products.stream()
-                .map(this::toResponseDTO)
-                .collect(Collectors.toList());
-    }
-
-    // Funció per ordenar per preu
-    public List<ProductResponseDTO> searchByPrice(String order) {
-    if ("desc".equalsIgnoreCase(order)) {
-        return productRepository.findByStatusTrueOrderByPriceDesc()
-                                .stream()
-                                .map(this::toResponseDTO)
-                                .toList();
-    } else {
-        return productRepository.findByStatusTrueOrderByPriceAsc()
-                                .stream()
-                                .map(this::toResponseDTO)
-                                .toList();
-        }
-    }
-
-    //Retorna llista amb productes que estiguin entre preu min i preu max
-    @Transactional
-    public List<Product> getProductsByPriceRange(Double min, Double max, String order) {
-        Stream<Product> stream = order.equalsIgnoreCase("asc") ?
-                productRepository.findByPriceRangeAsc(min, max) :
-                productRepository.findByPriceRangeDesc(min, max);
-
-        return stream.collect(Collectors.toList());
-    }
-
-    //Retorna una llista amb el top 5 de productes amb el millor preu
-    @Transactional
-    public List<Product> getTop5ByQualityPrice() {
-        return productRepository.topByQualityPrice()
-                .limit(5)
-                .collect(Collectors.toList());
-    }
 }
