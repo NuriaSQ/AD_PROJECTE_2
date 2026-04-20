@@ -117,7 +117,7 @@ public class ProductServices {
             if (opt.isEmpty())
                 return;
             Product product = opt.get();
-            product.setPrice(Float.valueOf(price));
+            product.setPrice(price);
             product.setDataUpdated(java.time.LocalDateTime.now());
             productRepository.save(product);
         } catch (Exception e) {
@@ -202,10 +202,10 @@ public class ProductServices {
 
     // Funció per ordenar per preu
     public List<ProductResponseDTO> searchByPrice(String order) {
-    if ("desc".equalsIgnoreCase(order)) {
-        return productRepository.findByStatusTrueOrderByPriceDesc().stream().map(this::toResponseDTO).toList();
-    } else {
-        return productRepository.findByStatusTrueOrderByPriceAsc().stream().map(this::toResponseDTO).toList();
+        if ("desc".equalsIgnoreCase(order)) {
+            return productRepository.findByStatusTrueOrderByPriceDesc().stream().map(this::toResponseDTO).toList();
+        } else {
+            return productRepository.findByStatusTrueOrderByPriceAsc().stream().map(this::toResponseDTO).toList();
         }
     }
 
