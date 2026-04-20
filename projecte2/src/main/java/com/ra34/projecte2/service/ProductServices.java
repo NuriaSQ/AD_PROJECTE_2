@@ -2,7 +2,6 @@ package com.ra34.projecte2.service;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.math.BigDecimal;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -112,13 +111,13 @@ public class ProductServices {
     }
 
     //Actualitza el preu d'un producte
-    public void updatePrice(Long id, Double price) {
+    public void updatePrice(Long id, Float price) {
         try {
             Optional<Product> opt = productRepository.findById(id);
             if (opt.isEmpty())
                 return;
             Product product = opt.get();
-            product.setPrice(java.math.BigDecimal.valueOf(price));
+            product.setPrice(Float.valueOf(price));
             product.setDataUpdated(java.time.LocalDateTime.now());
             productRepository.save(product);
         } catch (Exception e) {
@@ -170,8 +169,8 @@ public class ProductServices {
                     product.setName(camps[0].trim().replace("\"", ""));
                     product.setDescription(camps[1].trim().replace("\"", ""));
                     product.setStock(Integer.parseInt(camps[2].trim().replace("\"", "")));
-                    product.setPrice(new BigDecimal(camps[3].trim().replace("\"", "")));
-                    product.setRating(camps[4].trim().isEmpty() ? null : new BigDecimal(camps[4].trim().replace("\"", "")));
+                    product.setPrice(Float.parseFloat(camps[3].trim().replace("\"", "")));
+                    product.setRating(camps[4].trim().isEmpty() ? null : Float.parseFloat(camps[4].trim().replace("\"", "")));
                     product.setCondition(Condition.valueOf(camps[5].trim().replace("\"", "").toUpperCase()));
                     product.setStatus(true);
                     product.setDataCreated(java.time.LocalDateTime.now());
@@ -212,7 +211,7 @@ public class ProductServices {
 
     //Retorna llista amb productes que estiguin entre preu min i preu max
     @Transactional
-    public List<ProductResponseDTO> getProductsByPriceRange(Double min, Double max, String order) {
+    public List<ProductResponseDTO> getProductsByPriceRange(Float min, Float max, String order) {
         Stream<Product> stream = order.equalsIgnoreCase("asc") ?
                 productRepository.findByPriceRangeAsc(min, max) : productRepository.findByPriceRangeDesc(min, max);
         return stream.map(this::toResponseDTO).toList();

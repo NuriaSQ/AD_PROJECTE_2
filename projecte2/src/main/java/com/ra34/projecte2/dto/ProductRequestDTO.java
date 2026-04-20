@@ -1,6 +1,5 @@
 package com.ra34.projecte2.dto;
 
-import java.math.BigDecimal;
 import com.ra34.projecte2.model.Condition;
 
 //DTO per rebre dades de creació i modificació d’un producte.
@@ -9,8 +8,8 @@ public class ProductRequestDTO {
     private String name;
     private String description;
     private Integer stock;
-    private BigDecimal price;
-    private BigDecimal rating;
+    private Float price;
+    private Float rating;
     private Condition condition;
 
     public ProductRequestDTO() {
@@ -28,11 +27,11 @@ public class ProductRequestDTO {
         return stock;
     }
 
-    public BigDecimal getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public BigDecimal getRating() {
+    public Float getRating() {
         return rating;
     }
 
@@ -52,11 +51,11 @@ public class ProductRequestDTO {
         this.stock = stock;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public void setRating(BigDecimal rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 

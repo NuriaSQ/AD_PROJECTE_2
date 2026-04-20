@@ -57,7 +57,7 @@ public class ProductController {
 
     //Endpoint per actualitzar el preu d'un producte
     @PatchMapping("/{id}/price")
-    public ResponseEntity<String> updatePrice(@PathVariable Long id, @RequestParam Double price) {
+    public ResponseEntity<String> updatePrice(@PathVariable Long id, @RequestParam Float price) {
         productServices.updatePrice(id, price);
         return ResponseEntity.ok("Preu actualitzat correctament.");
     }
@@ -107,7 +107,7 @@ public class ProductController {
     //Endpoint per mostrar productes dins d'un rang de preu min i preu max
     @GetMapping("/search/price-range")
     public ResponseEntity<List<ProductResponseDTO>> getProductsByPriceRange(
-            @RequestParam Double priceMin,@RequestParam Double priceMax,@RequestParam String order) {
+            @RequestParam Float priceMin,@RequestParam Float priceMax,@RequestParam String order) {
         List<ProductResponseDTO> dtoList = productServices.getProductsByPriceRange(priceMin, priceMax, order);
         return ResponseEntity.ok(dtoList);
     }
