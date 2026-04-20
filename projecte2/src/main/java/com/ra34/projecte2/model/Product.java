@@ -1,6 +1,5 @@
 package com.ra34.projecte2.model;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
@@ -13,8 +12,8 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 //Entidad producte amb les seves variables, getters i setters per construir la base de dades.
-@Entity
-@Table(name = "products")
+@Entity(name = "product")
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -27,9 +26,9 @@ public class Product {
 
     private Integer stock;
 
-    private BigDecimal price;
+    private Float price;
 
-    private BigDecimal rating;
+    private Float rating;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "`condition`")
@@ -44,7 +43,8 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, String description, Integer stock, BigDecimal price, BigDecimal rating, Condition condition, Boolean status, LocalDateTime dataCreated, LocalDateTime dataUpdated) {
+    public Product(String name, String description, Integer stock, Float price, Float rating,
+                   Condition condition, Boolean status, LocalDateTime dataCreated, LocalDateTime dataUpdated) {
         this.name = name;
         this.description = description;
         this.stock = stock;
@@ -72,11 +72,11 @@ public class Product {
         return stock;
     }
 
-    public BigDecimal getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public BigDecimal getRating() {
+    public Float getRating() {
         return rating;
     }
 
@@ -112,11 +112,11 @@ public class Product {
         this.stock = stock;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public void setRating(BigDecimal rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 

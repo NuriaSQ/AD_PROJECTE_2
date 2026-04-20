@@ -1,6 +1,5 @@
 package com.ra34.projecte2.dto;
 
-import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import com.ra34.projecte2.model.Condition;
 import com.ra34.projecte2.model.Product;
@@ -12,8 +11,8 @@ public class ProductResponseDTO {
     private String name;
     private String description;
     private Integer stock;
-    private BigDecimal price;
-    private BigDecimal rating;
+    private Float price;
+    private Float rating;
     private Condition condition;
     private Boolean status;
     private LocalDateTime dataCreated;
@@ -51,11 +50,11 @@ public class ProductResponseDTO {
         return stock;
     }
 
-    public BigDecimal getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public BigDecimal getRating() {
+    public Float getRating() {
         return rating;
     }
 
@@ -91,11 +90,11 @@ public class ProductResponseDTO {
         this.stock = stock;
     }
 
-    public void setPrice(BigDecimal price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 
-    public void setRating(BigDecimal rating) {
+    public void setRating(Float rating) {
         this.rating = rating;
     }
 
