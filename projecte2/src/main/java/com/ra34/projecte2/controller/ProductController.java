@@ -8,8 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.ra34.projecte2.dto.ProductRequestDTO;
-import com.ra34.projecte2.dto.ProductResponseDTO;
+import com.ra34.projecte2.dto.product.ProductRequestDTO;
+import com.ra34.projecte2.dto.product.ProductResponseDTO;
 import com.ra34.projecte2.service.ProductServices;
 
 @RestController

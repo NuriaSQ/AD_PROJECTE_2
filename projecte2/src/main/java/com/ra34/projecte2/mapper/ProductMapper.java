@@ -2,8 +2,8 @@ package com.ra34.projecte2.mapper;
 
 import org.springframework.stereotype.Component;
 
-import com.ra34.projecte2.dto.ProductRequestDTO;
-import com.ra34.projecte2.dto.ProductResponseDTO;
+import com.ra34.projecte2.dto.product.ProductRequestDTO;
+import com.ra34.projecte2.dto.product.ProductResponseDTO;
 import com.ra34.projecte2.model.Product;
 
 @Component

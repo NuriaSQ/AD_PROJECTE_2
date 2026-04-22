@@ -18,13 +18,9 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String invoiceNumber;
-
     private LocalDate issueDate;
-
     private Float taxAmount;
-
     private Float totalWithTax;
 
     @OneToOne

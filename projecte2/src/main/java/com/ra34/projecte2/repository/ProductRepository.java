@@ -15,7 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //Buscar
     List<Product> findByNameContainingIgnoreCaseAndStatusTrue(String prefix);
-
     //Ordenar
     List<Product> findByStatusTrueOrderByPriceAsc();
     List<Product> findByStatusTrueOrderByPriceDesc();
