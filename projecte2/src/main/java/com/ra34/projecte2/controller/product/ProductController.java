@@ -1,4 +1,4 @@
-package com.ra34.projecte2.controller;
+package com.ra34.projecte2.controller.product;
 
 import java.util.List;
 

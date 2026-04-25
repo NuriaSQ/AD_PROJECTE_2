@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
-
+// Entitat de Invoice
 @Entity(name = "invoice")
 @Table(name = "invoice")
 public class Invoice {

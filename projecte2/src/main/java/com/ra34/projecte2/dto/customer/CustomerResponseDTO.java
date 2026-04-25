@@ -3,6 +3,8 @@ package com.ra34.projecte2.dto.customer;
 import java.util.List;
 import com.ra34.projecte2.dto.address.AddressResponseDTO;
 
+// DTO de resposta de client (Customer)
+// Retorna la informació del client juntament amb les seves adreces associades
 public class CustomerResponseDTO {
 
     private Long id;

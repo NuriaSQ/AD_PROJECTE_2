@@ -11,6 +11,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 
+//Entitat de Role
 @Entity(name = "role")
 @Table(name = "role")
 public class Role {

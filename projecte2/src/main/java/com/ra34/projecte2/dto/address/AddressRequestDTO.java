@@ -1,5 +1,6 @@
 package com.ra34.projecte2.dto.address;
 
+// DTO de petició per crear o afegir una adreça a un client
 public class AddressRequestDTO {
 
     private String address;

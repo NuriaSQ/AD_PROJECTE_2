@@ -15,6 +15,7 @@ public class CustomerMapper {
     @Autowired
     private AddressMapper addressMapper;
 
+    // Mètode per convertir una entitat Customer a CustomerResponseDTO
     public CustomerResponseDTO toDto(Customer entity) {
 
         if (entity == null) return null;
@@ -23,6 +24,7 @@ public class CustomerMapper {
 
         dto.setId(entity.getId());
 
+        // Mapeig de l'email de l'usuari associat al customer
         if (entity.getUser() != null) {
             dto.setEmail(entity.getUser().getEmail());
         }
@@ -31,6 +33,7 @@ public class CustomerMapper {
         dto.setLastName(entity.getLastName());
         dto.setPhone(entity.getPhone());
 
+        // Mapeig de la llista d'adreces del customer
         if (entity.getAddresses() != null) {
             List<AddressResponseDTO> addresses = entity.getAddresses()
                     .stream()

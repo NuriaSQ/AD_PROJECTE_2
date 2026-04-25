@@ -13,6 +13,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
+//Entitat de User
 @Entity(name = "user")
 @Table(name = "user")
 public class User {

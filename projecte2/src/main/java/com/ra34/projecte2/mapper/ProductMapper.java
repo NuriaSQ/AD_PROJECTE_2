@@ -9,6 +9,7 @@ import com.ra34.projecte2.model.Product;
 @Component
 public class ProductMapper {
 
+    // Mètode per convertir una entitat Product a ProductResponseDTO
     public ProductResponseDTO toDto(Product product) {
         if (product == null) return null;
 
@@ -27,6 +28,7 @@ public class ProductMapper {
         return dto;
     }
 
+    // Mètode per convertir un ProductRequestDTO a entitat Product
     public Product toEntity(ProductRequestDTO dto) {
         if (dto == null) return null;
 

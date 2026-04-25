@@ -9,6 +9,7 @@ import com.ra34.projecte2.model.Address;
 @Component
 public class AddressMapper {
 
+    // Mètode per convertir una entitat Address a AddressResponseDTO
     public AddressResponseDTO toDto(Address entity) {
 
         if (entity == null) return null;
@@ -25,6 +26,7 @@ public class AddressMapper {
         return dto;
     }
 
+    // Mètode per convertir un AddressRequestDTO a entitat Address
     public Address toEntity(AddressRequestDTO dto) {
 
         if (dto == null) return null;

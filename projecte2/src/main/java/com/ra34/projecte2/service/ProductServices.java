@@ -51,10 +51,7 @@ public class ProductServices {
     //Mostra la llista de tots el productes de la bbdd
     public List<ProductResponseDTO> findAll() {
         try {
-            return productRepository.findAll()
-                    .stream()
-                    .map(productMapper::toDto)
-                    .toList();
+            return productRepository.findAll().stream().map(productMapper::toDto).toList();
         } catch (Exception e) {
             return null;
         }
@@ -207,26 +204,17 @@ public class ProductServices {
 
     // Funció per buscar per nom
     public List<ProductResponseDTO> searchByName(String prefix) {
-        return productRepository.findByNameContainingIgnoreCaseAndStatusTrue(prefix)
-                .stream()
-                .map(productMapper::toDto)
-                .toList();
+        return productRepository.findByNameContainingIgnoreCaseAndStatusTrue(prefix).stream().map(productMapper::toDto).toList();
     }
 
     // Funció per ordenar per preu
     public List<ProductResponseDTO> searchByPrice(String order) {
 
         if ("desc".equalsIgnoreCase(order)) {
-            return productRepository.findByStatusTrueOrderByPriceDesc()
-                    .stream()
-                    .map(productMapper::toDto)
-                    .toList();
+            return productRepository.findByStatusTrueOrderByPriceDesc().stream().map(productMapper::toDto).toList();
         }
 
-        return productRepository.findByStatusTrueOrderByPriceAsc()
-                .stream()
-                .map(productMapper::toDto)
-                .toList();
+        return productRepository.findByStatusTrueOrderByPriceAsc().stream().map(productMapper::toDto).toList();
     }
 
     //Retorna llista amb productes que estiguin entre preu min i preu max
@@ -239,9 +227,6 @@ public class ProductServices {
     //Retorna una llista amb el top 5 de productes amb el millor preu
     @Transactional
     public List<ProductResponseDTO> getTop5ByQualityPrice() {
-        return productRepository.topByQualityPrice()
-                .limit(5)
-                .map(productMapper::toDto)
-                .toList();
+        return productRepository.topByQualityPrice().limit(5).map(productMapper::toDto).toList();
     }
 }

@@ -1,4 +1,6 @@
 package com.ra34.projecte2.dto.user;
+import java.util.List;
+import com.ra34.projecte2.model.RoleName;
 
 public class UserResponseDTO {
 
@@ -8,6 +10,7 @@ public class UserResponseDTO {
     private String firstName;
     private String lastName;
     private String phone;
+    private List<RoleName> roles;
 
     public Long getId() {
         return id;
@@ -33,6 +36,10 @@ public class UserResponseDTO {
         return phone;
     }
 
+    public List<RoleName> getRoles() {
+        return roles;
+    }
+
     public void setId(Long id) {
         this.id = id;
     }
@@ -55,5 +62,9 @@ public class UserResponseDTO {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public void setRoles(List<RoleName> roles) {
+        this.roles = roles;
     }
 }

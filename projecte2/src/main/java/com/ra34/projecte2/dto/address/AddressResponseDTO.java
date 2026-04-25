@@ -1,5 +1,7 @@
 package com.ra34.projecte2.dto.address;
 
+// DTO de resposta d'adreça (Address)
+// Retorna la informació d'una adreça associada a un client
 public class AddressResponseDTO {
 
     private Long id;

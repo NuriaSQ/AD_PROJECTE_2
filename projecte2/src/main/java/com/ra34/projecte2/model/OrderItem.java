@@ -8,7 +8,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
-@Entity(name = "order_item")
+//Entitat d'OrderItem
+@Entity
 @Table(name = "order_item")
 public class OrderItem {
 
@@ -18,7 +19,7 @@ public class OrderItem {
 
     private Integer quantity;
 
-    private Float unitPrice;
+    private Float price;
 
     @ManyToOne
     @JoinColumn(name = "orderId")
@@ -39,8 +40,8 @@ public class OrderItem {
         return quantity;
     }
 
-    public Float getUnitPrice() {
-        return unitPrice;
+    public Float getPrice() {
+        return price;
     }
 
     public Order getOrder() {
@@ -59,8 +60,8 @@ public class OrderItem {
         this.quantity = quantity;
     }
 
-    public void setUnitPrice(Float unitPrice) {
-        this.unitPrice = unitPrice;
+    public void setPrice(Float price) {
+        this.price = price;
     }
 
     public void setOrder(Order order) {

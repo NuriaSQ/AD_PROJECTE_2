@@ -28,6 +28,7 @@ public class CustomerService {
     @Autowired
     private CustomerMapper customerMapper;
 
+    // Mètode per afegir adreces a un customer existent
     @Transactional
     public CustomerResponseDTO addAddresses(Long customerId, List<AddressRequestDTO> dtoList) {
 
@@ -61,6 +62,7 @@ public class CustomerService {
         }
     }
 
+    // Mètode per obtenir un customer per id
     public CustomerResponseDTO getCustomer(Long id) {
 
         try {
@@ -68,6 +70,24 @@ public class CustomerService {
             Customer customer = customerRepository.getReferenceById(id);
 
             return customerMapper.toDto(customer);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    // Mètode per obtenir la llista de tots els customers
+    public List<CustomerResponseDTO> getAllCustomers() {
+        try {
+
+            List<Customer> customers = customerRepository.findAll();
+            List<CustomerResponseDTO> result = new ArrayList<>();
+
+            for (Customer customer : customers) {
+                result.add(customerMapper.toDto(customer));
+            }
+            return result;
 
         } catch (Exception e) {
             e.printStackTrace();
