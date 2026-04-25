@@ -3,9 +3,20 @@ package com.ra34.projecte2.model;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
-@Entity(name = "order")
+
+
+//Entitat d'Order
+@Entity
 @Table(name = "orders")
 public class Order {
 
@@ -13,14 +24,9 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private LocalDateTime orderDate;
-
     private Float totalAmount;
 
-    @Enumerated(EnumType.STRING)
-    private OrderStatus orderStatus;
-
-    private Boolean status;
+    private String orderStatus;
 
     private LocalDateTime dataCreated;
 
@@ -30,11 +36,8 @@ public class Order {
     @JoinColumn(name = "customerId")
     private Customer customer;
 
-    @OneToMany(mappedBy = "order")
-    private List<OrderItem> orderItems;
-
-    @OneToOne(mappedBy = "order")
-    private Invoice invoice;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderItem> items;
 
     public Order() {
     }
@@ -43,20 +46,12 @@ public class Order {
         return id;
     }
 
-    public LocalDateTime getOrderDate() {
-        return orderDate;
-    }
-
     public Float getTotalAmount() {
         return totalAmount;
     }
 
-    public OrderStatus getOrderStatus() {
+    public String getOrderStatus() {
         return orderStatus;
-    }
-
-    public Boolean getStatus() {
-        return status;
     }
 
     public LocalDateTime getDataCreated() {
@@ -71,32 +66,20 @@ public class Order {
         return customer;
     }
 
-    public List<OrderItem> getOrderItems() {
-        return orderItems;
-    }
-
-    public Invoice getInvoice() {
-        return invoice;
+    public List<OrderItem> getItems() {
+        return items;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setOrderDate(LocalDateTime orderDate) {
-        this.orderDate = orderDate;
-    }
-
     public void setTotalAmount(Float totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public void setOrderStatus(OrderStatus orderStatus) {
+    public void setOrderStatus(String orderStatus) {
         this.orderStatus = orderStatus;
-    }
-
-    public void setStatus(Boolean status) {
-        this.status = status;
     }
 
     public void setDataCreated(LocalDateTime dataCreated) {
@@ -111,11 +94,7 @@ public class Order {
         this.customer = customer;
     }
 
-    public void setOrderItems(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
-    }
-
-    public void setInvoice(Invoice invoice) {
-        this.invoice = invoice;
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
     }
 }

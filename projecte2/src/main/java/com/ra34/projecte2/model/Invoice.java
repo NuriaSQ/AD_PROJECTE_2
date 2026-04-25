@@ -2,8 +2,15 @@ package com.ra34.projecte2.model;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
+// Entitat de Invoice
 @Entity(name = "invoice")
 @Table(name = "invoice")
 public class Invoice {
@@ -11,13 +18,9 @@ public class Invoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     private String invoiceNumber;
-
     private LocalDate issueDate;
-
     private Float taxAmount;
-
     private Float totalWithTax;
 
     @OneToOne

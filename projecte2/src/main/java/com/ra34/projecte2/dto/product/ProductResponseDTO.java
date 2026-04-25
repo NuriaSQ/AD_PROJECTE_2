@@ -1,4 +1,4 @@
-package com.ra34.projecte2.dto;
+package com.ra34.projecte2.dto.product;
 
 import java.time.LocalDateTime;
 import com.ra34.projecte2.model.Condition;

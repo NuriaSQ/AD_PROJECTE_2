@@ -9,13 +9,13 @@ import org.springframework.data.repository.query.Param;
 
 import com.ra34.projecte2.model.Product;
 
+// Repositori de products
 public interface ProductRepository extends JpaRepository<Product, Long> {
 
     //QUERY METHOD
 
     //Buscar
     List<Product> findByNameContainingIgnoreCaseAndStatusTrue(String prefix);
-
     //Ordenar
     List<Product> findByStatusTrueOrderByPriceAsc();
     List<Product> findByStatusTrueOrderByPriceDesc();

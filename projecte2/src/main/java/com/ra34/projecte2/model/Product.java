@@ -11,8 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-//Entidad producte amb les seves variables, getters i setters per construir la base de dades.
-@Entity(name = "product")
+
+//Entitat de Product
+@Entity
 @Table(name = "product")
 public class Product {
 
@@ -41,19 +42,6 @@ public class Product {
     private LocalDateTime dataUpdated;
 
     public Product() {
-    }
-
-    public Product(String name, String description, Integer stock, Float price, Float rating,
-                   Condition condition, Boolean status, LocalDateTime dataCreated, LocalDateTime dataUpdated) {
-        this.name = name;
-        this.description = description;
-        this.stock = stock;
-        this.price = price;
-        this.rating = rating;
-        this.condition = condition;
-        this.status = status;
-        this.dataCreated = dataCreated;
-        this.dataUpdated = dataUpdated;
     }
 
     public Long getId() {
